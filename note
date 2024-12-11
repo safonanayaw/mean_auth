@@ -1,0 +1,9 @@
+express - for app router
+cors: help connect frontend to backend 
+dotenv : help install environment parkages in the backend 
+nodemon: help restart the backend when changes are made
+jsonwebtoken: generate token for authentication 
+mongoose: help connect with the mongo db
+bcrypt : help to incrypt password and save in database.
+nodemailer: helps to send emails
+cookie-parser: help to send cookies in the api response.
