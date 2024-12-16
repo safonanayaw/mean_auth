@@ -1,3 +1,5 @@
+#######backend notes
+backend dependencies 
 express - for app router
 cors: help connect frontend to backend 
 dotenv : help install environment parkages in the backend 
@@ -7,3 +9,19 @@ mongoose: help connect with the mongo db
 bcrypt : help to incrypt password and save in database.
 nodemailer: helps to send emails
 cookie-parser: help to send cookies in the api response.
+
+#######client node
+create the react app using npm create vite@latest
+frontend dependencies 
+axios: to make API calls
+react-router-dom: to create router in our reach app
+react-toastify: use toast notification
+
+#######css dependencies
+google outfit font family
+tailwind css: tailwind + vite css 
+
+folders
+context: folder to store all states of the application
+pages: application pages
+components: components for app
