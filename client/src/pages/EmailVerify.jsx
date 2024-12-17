@@ -1,7 +1,10 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import { AppContext } from '../context/AppContext'
 
 const EmailVerify = () => {
+
+  //adding backEndurl from AppContext
 
   //storing the otp values using input refs
   const inputRefs = React.useRef([])
@@ -31,6 +34,26 @@ const EmailVerify = () => {
         inputRefs.current[index - 1].focus(); 
       }
     }
+
+    //fxn to handle form data
+    //submit otp to api call endpoint
+    const onSubmitHnadler = async (e) =>{
+      try {
+        //prevent the default functionality that will reloard the page when form is submitted
+        e.preventDefault()
+        
+        //add all input field data into otpArray array
+        const otpArray = inputRefs.current.map(e=>e.value)
+        //join the array elements in otpArray into single string
+        const otp = otpArray.join('');
+        //send otp to backend api
+
+        const {data} = await axios.post()
+        
+      } catch (error) {
+        
+      }
+    }  
   return (
 
     <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400'>
