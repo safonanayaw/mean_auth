@@ -9,6 +9,23 @@ const Navbar = () => {
     const navigate = useNavigate()
     const {userData, backendUrl, setUserData, setIsLoggedin} = useContext(AppContext)
 
+    //navbar api endpoint send-verification-otp fxn
+    const sendVerificationOtp = async ()=>{
+      try {
+        //send cookies
+        axios.defaults.withCredentials = true;
+        //make api call on the send-verification-otp API end point
+        const {data} = await axios.post(backendUrl + '/api/auth/send-verify-otp')
+        if(data.success){
+          navigate('/email-verify')
+          toast.success(data.message)
+        }else{
+          toast.error(data.message)
+        }
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
       //logout fxn
     const logout = async ()=>{
       try{
@@ -39,7 +56,7 @@ const Navbar = () => {
           <ul className='list-none m-0 p-2 bg-gray-100 text-sm'>
 
             {/* check user db isAccountVerified status and hide or display "Verify Email"*/}
-            {!userData.isAccountVerified && <li className='px-1 py-2 hover:bg-gray-200 cursor-pointer'>Verify email</li>}
+            {!userData.isAccountVerified && <li onClick={sendVerificationOtp} className='px-1 py-2 hover:bg-gray-200 cursor-pointer'>Verify email</li>}
 
             {/* logout li */}
             <li onClick={logout} className='px-1 py-2 hover:bg-gray-200 cursor-pointer pr-10'>Logout</li>

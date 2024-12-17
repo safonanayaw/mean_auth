@@ -7,6 +7,8 @@ export const AppContext = createContext()
 export const AppContextProvider = (props)=>{
     
     const backendUrl = import.meta.env.VITE_BACKEND_URL
+    //set cookies with credential to true
+    axios.defaults.withCredentials = true;
 
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState(false);
