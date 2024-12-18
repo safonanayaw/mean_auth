@@ -5,6 +5,11 @@ import { toast } from 'react-toastify'
 export const AppContext = createContext()
 
 export const AppContextProvider = (props)=>{
+    //maintain login state when page refresh
+    //send cookies
+    //allow cookies
+    axios.defaults.withCredentials = true;
+
     
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
@@ -17,9 +22,9 @@ export const AppContextProvider = (props)=>{
         try {
             const {data} = await axios.get(backendUrl + '/api/auth/is-auth')
             //if user is authenticated data.success is true ; setIsLoggedin to true
+            //set cookie with credential to true
             if(data.success){
                 setIsLoggedin(true)
-
                 getUserData()
             }
         } catch (error) {
