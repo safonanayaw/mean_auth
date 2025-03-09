@@ -1,10 +1,20 @@
-import React from 'react'
+import axios from 'axios'
+import {toast} from 'react-toastify'
+import React, { useContext, useEffect } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
+import { useNavigate } from 'react-router-dom';
 
 const EmailVerify = () => {
 
+  //send cookie with api call
+  axios.defaults.withCrendentials = true;
+
   //adding backEndurl from AppContext
+  const {backendUrl, isLoggedin, userData, getUserData} = useContext(AppContext)
+
+  //useNavigate hook for navigating
+  const navigate = useNavigate()
 
   //storing the otp values using input refs
   const inputRefs = React.useRef([])
@@ -48,19 +58,39 @@ const EmailVerify = () => {
         const otp = otpArray.join('');
         //send otp to backend api
 
-        const {data} = await axios.post()
+        //sending the otp to the backend
+        const {data} = await axios.post(backendUrl + '/api/auth/verify-account', {otp})
+        if(data.success){
+          toast.success(data.message)
+          //get user data after otp is true
+          getUserData()
+          //navigate to home page using useNavigate hook
+          navigate('/')
+
+        }else{
+          toast.error(data.message)
+        }
         
       } catch (error) {
-        
+        toast.error(error.message)
       }
     }  
+    // after verifing otp automatically redirect user to home page if 
+    //user navigate to email-verify page, as user is already verify
+    useEffect(()=>{
+      isLoggedin && userData && userData.isAccountVerified && navigate('/')
+    }, [userData, isLoggedin,])
+
+
   return (
 
     <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-purple-400'>
       <img 
       onClick={()=>navigate('/')}
       src={assets.logo} alt=""  className='absolute left-5 sm:left-20 top-5 w-28 sm:-32 cursor-pointer'/>
-      <form className='bg-slate-900 p-8 rounded-lg shadow-lg -96 text-sm'>
+
+      <form onSubmit={onSubmitHnadler} className='bg-slate-900 p-8 rounded-lg shadow-lg -96 text-sm'>
+
         <h1 className='text-white text-2xl text-semibold  text-center mb-4'>Email Verify OTP</h1>
         <p className='text-center mb-6 text-indigo-300'>Enter the 6-digits code sent to your email</p>
         <div className='flex justify-between mb-8' onPaste={handlePaste}>
