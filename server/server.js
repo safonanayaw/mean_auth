@@ -10,12 +10,13 @@ const app = express();
 const port = process.env.PORT || 4000
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = process.env.FRONTEND_URL
 
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({origin: allowedOrigins,
+    methods: "GET, POST, PUT, DELETE",
     credentials: true
 }))
 
